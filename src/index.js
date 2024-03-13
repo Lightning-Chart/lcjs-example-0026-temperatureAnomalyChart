@@ -9,7 +9,7 @@ const { lightningChart, AxisTickStrategies, UIElementBuilders, UIOrigins, ImageF
 
 const chart = lightningChart()
     .ChartXY({
-        // theme: Themes.darkGold
+        theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
     })
     .setTitle('')
 
