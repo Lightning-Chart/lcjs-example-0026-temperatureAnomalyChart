@@ -30,7 +30,7 @@ const axisY2 = chart
 const axisX = chart.getDefaultAxisX().setTickStrategy(AxisTickStrategies.DateTime)
 
 // Fetch example data sets.
-fetch(document.head.baseURI + `examples/assets/0026/anomaly-data.json`)
+fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pathname + `examples/assets/0026/anomaly-data.json`)
     .then((r) => r.json())
     .then((data) => {
         const { temperature, co2 } = data
@@ -65,15 +65,17 @@ fetch(document.head.baseURI + `examples/assets/0026/anomaly-data.json`)
                 })),
             )
 
-    // Add legend.
-    const legend = chart.addLegendBox(undefined, { x: axisX, y: axisY1 }).add(chart)
-      // Move to non-default location, top left of chart.
-      .setOrigin(UIOrigins.LeftTop)
-      .setMargin(4)
-    const positionLegendOnAxes = () => legend.setPosition({ x: axisX.getInterval().start, y: axisY1.getInterval().end })
-    positionLegendOnAxes()
-    axisX.onIntervalChange(positionLegendOnAxes)
-    axisY1.onIntervalChange(positionLegendOnAxes)
+        // Add legend.
+        const legend = chart
+            .addLegendBox(undefined, { x: axisX, y: axisY1 })
+            .add(chart)
+            // Move to non-default location, top left of chart.
+            .setOrigin(UIOrigins.LeftTop)
+            .setMargin(4)
+        const positionLegendOnAxes = () => legend.setPosition({ x: axisX.getInterval().start, y: axisY1.getInterval().end })
+        positionLegendOnAxes()
+        axisX.onIntervalChange(positionLegendOnAxes)
+        axisY1.onIntervalChange(positionLegendOnAxes)
 
         // Add thundercloud icons to predefined X and Y2 (anomaly index) axis locations.
         const video = document.createElement('video')
@@ -81,7 +83,8 @@ fetch(document.head.baseURI + `examples/assets/0026/anomaly-data.json`)
         video.autoplay = true
         video.muted = true
         video.loop = true
-        video.src = document.head.baseURI + `examples/assets/0026/thundercloud.webm`
+        video.src =
+            new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pathname + `examples/assets/0026/thundercloud.webm`
         video.load()
         video.addEventListener('loadeddata', (e) => {
             video.play()
