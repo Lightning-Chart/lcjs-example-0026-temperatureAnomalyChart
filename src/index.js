@@ -3,7 +3,7 @@
  */
 
 // Import LightningChartJS
-const lcjs = require('@arction/lcjs')
+const lcjs = require('@lightningchart/lcjs')
 
 const { lightningChart, AxisTickStrategies, UIElementBuilders, UIOrigins, ImageFill, emptyLine, ImageFitMode, emptyFill, Themes } = lcjs
 
@@ -15,13 +15,14 @@ const chart = lightningChart({
     })
     .setTitle('')
 
-const axisY1 = chart.getDefaultAxisY().setTitle('Atmospheric Carbon Dioxide (ppm)')
+const axisY1 = chart.getDefaultAxisY().setTitle('Atmospheric Carbon Dioxide').setUnits('ppm')
 
 const axisY2 = chart
     .addAxisY({
         opposite: true,
     })
-    .setTitle('Temperature Anomaly Index (°C)')
+    .setTitle('Temperature Anomaly Index')
+    .setUnits('°C')
     // Hide tick grid-lines from second Y axis.
     .setTickStrategy(AxisTickStrategies.Numeric, (ticks) =>
         ticks
@@ -39,9 +40,11 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
 
         // Visualize Atmospheric Carbon Dioxide (ppm).
         const carbonDioxideSeries = chart
-            .addLineSeries({
+            .addPointLineAreaSeries({
+                dataPattern: 'ProgressiveX',
                 yAxis: axisY1,
             })
+            .setAreaFillStyle(emptyFill)
             .setName('Atmospheric Carbon Dioxide (ppm)')
             // Data set contains PPM measurement values only. First measurement is from year 1880, and each consecutive measurement is 1 year after previous.
             .add(
@@ -53,11 +56,13 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
 
         // Visualize Temperature Anomaly Index (°C).
         const temperatureAnomalyIndexSeries = chart
-            .addLineSeries({
+            .addPointLineAreaSeries({
+                dataPattern: 'ProgressiveX',
                 yAxis: axisY2,
                 // Specify index for automatic color selection. By default this would be 1, but a larger number is supplied to increase contrast between series.
                 automaticColorIndex: 2,
             })
+            .setAreaFillStyle(emptyFill)
             .setName('Temperature Anomaly Index (°C)')
             // Data set contains PPM measurement values only. First measurement is from year 1880, and each consecutive measurement is 1 year after previous.
             .add(
