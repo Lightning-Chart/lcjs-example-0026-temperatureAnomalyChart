@@ -73,16 +73,13 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
             )
 
         // Add legend.
-        const legend = chart
-            .addLegendBox(undefined, { x: axisX, y: axisY1 })
-            .add(chart)
-            // Move to non-default location, top left of chart.
-            .setOrigin(UIOrigins.LeftTop)
-            .setMargin(4)
-        const positionLegendOnAxes = () => legend.setPosition({ x: axisX.getInterval().start, y: axisY1.getInterval().end })
-        positionLegendOnAxes()
-        axisX.onIntervalChange(positionLegendOnAxes)
-        axisY1.onIntervalChange(positionLegendOnAxes)
+        const legend = chart.addLegendBox(undefined, chart.coordsRelative).add(chart)
+        chart.addEventListener('layoutchange', (event) => {
+            legend
+                .setOrigin(UIOrigins.LeftTop)
+                .setMargin(5)
+                .setPosition({ x: event.margins.left, y: event.margins.bottom + event.viewportHeight })
+        })
 
         // Add thundercloud icons to predefined X and Y2 (anomaly index) axis locations.
         const video = document.createElement('video')
