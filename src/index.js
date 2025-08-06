@@ -5,12 +5,15 @@
 // Import LightningChartJS
 const lcjs = require('@lightningchart/lcjs')
 
-const { lightningChart, AxisTickStrategies, UIElementBuilders, UIOrigins, ImageFill, emptyLine, ImageFitMode, emptyFill, Themes } = lcjs
+const { lightningChart, AxisTickStrategies, UIElementBuilders, UIOrigins, ImageFill, emptyLine, ImageFitMode, emptyFill, LegendPosition, Themes } = lcjs
 
 const chart = lightningChart({
             resourcesBaseUrl: new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pathname + 'resources/',
         })
     .ChartXY({
+        legend: {
+            position: LegendPosition.TopLeft,
+        },
         theme: Themes[new URLSearchParams(window.location.search).get('theme') || 'darkGold'] || undefined,
     })
     .setTitle('')
@@ -40,14 +43,12 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
 
         // Visualize Atmospheric Carbon Dioxide (ppm).
         const carbonDioxideSeries = chart
-            .addPointLineAreaSeries({
-                dataPattern: 'ProgressiveX',
+            .addPointLineSeries({
                 yAxis: axisY1,
             })
-            .setAreaFillStyle(emptyFill)
             .setName('Atmospheric Carbon Dioxide (ppm)')
             // Data set contains PPM measurement values only. First measurement is from year 1880, and each consecutive measurement is 1 year after previous.
-            .add(
+            .appendJSON(
                 co2.map((ppm, i) => ({
                     y: ppm,
                     x: new Date(1880 + i, 0, 1, 0, 0, 0, 0).getTime(),
@@ -56,30 +57,19 @@ fetch(new URL(document.head.baseURI).origin + new URL(document.head.baseURI).pat
 
         // Visualize Temperature Anomaly Index (°C).
         const temperatureAnomalyIndexSeries = chart
-            .addPointLineAreaSeries({
-                dataPattern: 'ProgressiveX',
+            .addPointLineSeries({
                 yAxis: axisY2,
                 // Specify index for automatic color selection. By default this would be 1, but a larger number is supplied to increase contrast between series.
                 automaticColorIndex: 2,
             })
-            .setAreaFillStyle(emptyFill)
             .setName('Temperature Anomaly Index (°C)')
             // Data set contains PPM measurement values only. First measurement is from year 1880, and each consecutive measurement is 1 year after previous.
-            .add(
+            .appendJSON(
                 temperature.map((index, i) => ({
                     y: index,
                     x: new Date(1880 + i, 0, 1, 0, 0, 0, 0).getTime(),
                 })),
             )
-
-        // Add legend.
-        const legend = chart.addLegendBox(undefined, chart.coordsRelative).add(chart)
-        chart.addEventListener('layoutchange', (event) => {
-            legend
-                .setOrigin(UIOrigins.LeftTop)
-                .setMargin(5)
-                .setPosition({ x: event.margins.left, y: event.margins.bottom + event.viewportHeight })
-        })
 
         // Add thundercloud icons to predefined X and Y2 (anomaly index) axis locations.
         const video = document.createElement('video')
