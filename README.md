@@ -81,11 +81,11 @@ Direct developer email support can be purchased through a [Support Plan][4] or b
 © LightningChart Ltd 2009-2025. All rights reserved.
 
 
-[Chart XY]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/classes/ChartXY.html
-[Axis]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/classes/Axis.html
-[Numeric tick strategy]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/classes/NumericTickStrategy.html
-[Datetime tick strategy]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/classes/DateTimeTickStrategy.html
-[Line series]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/classes/LineSeries.html
-[Image fill style]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/classes/ImageFill.html
-[UI text box]: https://lightningchart.com/js-charts/api-documentation/v8.0.1/interfaces/UITextBox.html
+[Chart XY]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/classes/ChartXY.html
+[Axis]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/classes/Axis.html
+[Numeric tick strategy]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/classes/NumericTickStrategy.html
+[Datetime tick strategy]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/classes/DateTimeTickStrategy.html
+[Line series]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/classes/PointLineAreaSeries.html
+[Image fill style]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/classes/ImageFill.html
+[UI text box]: https://lightningchart.com/js-charts/api-documentation/v8.1.0/interfaces/UITextBox.html
 
